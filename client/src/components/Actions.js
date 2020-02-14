@@ -19,13 +19,11 @@ const Actions = ({ id }) => {
 
   return (
     <div>
-    {
-      actions.length === 0
-        ? <button onClick={fetchSteps}>Show Steps</button>
-        : <button onClick={hideSteps}>Hide Steps</button>
-      
-    }
-    
+      {
+        actions.length === 0
+          ? <button onClick={fetchSteps}>Show Steps</button>
+          : <button onClick={hideSteps}>Hide Steps</button>
+      }
       {
         actions.map((item, i) => {
           return (
