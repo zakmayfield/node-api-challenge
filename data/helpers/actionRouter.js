@@ -1,5 +1,6 @@
 const express = require('express');
 const Actions = require('./actionModel');
+const Projects = require('./projectModel');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -30,14 +31,25 @@ router.post('/:id', (req, res) => {
   const { id } = req.params;
   const payload = { ...req.body, project_id: id }
 
-  Actions.insert(payload)
-    .then(action => {
-      req.action = action;
-      res.status(201).json(req.action);
+  Projects.get(id)
+    .then(project => {
+      if(project === null){
+        res.status(404).json({error: "That project does not exist"});
+      } else {
+        Actions.insert(payload)
+          .then(action => {
+            req.action = action;
+            res.status(201).json(req.action);
+          })
+          .catch(err => {
+            console.log(err)
+            res.status(500).json({ error: "error on our end, sorry" });
+          })
+      }
     })
     .catch(err => {
       console.log(err)
-      res.status(500).json({ error: "error on our end, sorry" });
+      res.status(500).json({error: "error on our end, sorry"});
     })
 })
 
