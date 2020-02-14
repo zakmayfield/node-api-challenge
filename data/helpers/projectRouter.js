@@ -13,17 +13,8 @@ router.get('/', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-
-  Projects.get(id)
-  .then(project => {
-    res.status(200).json(project);
-  })
-  .catch(err => {
-    console.log(err)
-    res.status(500).json({ error: "error on our end, sorry" });
-  })
+router.get('/:id', validateProjectId, (req, res) => {
+  res.status(200).json(req.project);
 })
 
 router.post('/', (req, res) => {
@@ -63,5 +54,23 @@ router.put('/:id', (req, res) => {
       res.status(500).json({ error: "error on our end, sorry" });
     })
 })
+
+
+function validateProjectId(req, res, next){
+  const { id } = req.params;
+
+  Projects.get(id)
+    .then(project => {
+      req.project = project
+
+      !project
+        ? res.status(404).json({error: "That project does not exist"})
+        : next()
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({error: "error on our side, sorry"});
+    })
+}
 
 module.exports = router;
