@@ -21,7 +21,7 @@ const Projects = () => {
         projects.map((item, i) => {
           return (
             <div key={i}>
-              <p>{item.name}</p>
+              <h3>{item.name}</h3>
               <Actions id={item.id} />
             </div>
           )

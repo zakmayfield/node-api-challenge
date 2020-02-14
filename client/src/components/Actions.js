@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const Actions = ({ id }) => {
-  const [api] = useState(`http://localhost:5001/api/actions/`);
+  const [api] = useState(`http://localhost:5001/api/projects/${id}`);
   const [actions, setActions] = useState([]);
 
   const fetchSteps = () => {
     axios.get(api)
       .then(res => {
-        setActions(res.data);
+        setActions(res.data.actions);
       })
       .catch(err => console.log(err));
   }
