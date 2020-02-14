@@ -13,6 +13,19 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Actions.get(id)
+    .then(action => {
+      res.status(200).json(action);
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ error: "error on our end, sorry" });
+    })
+})
+
 router.post('/:id', (req, res) => {
   const { id } = req.params;
   const payload = { ...req.body, project_id: id }
@@ -29,8 +42,12 @@ router.post('/:id', (req, res) => {
 })
 
 router.delete('/:id', (req, res) => {
-  Actions.get()
-    .then()
+  const { id } = req.params;
+
+  Actions.remove(id)
+    .then(() => {
+      res.status(202).json({ message: "action removed!" });
+    })
     .catch(err => {
       console.log(err)
       res.status(500).json({ error: "error on our end, sorry" });
@@ -38,8 +55,13 @@ router.delete('/:id', (req, res) => {
 })
 
 router.put('/:id', (req, res) => {
-  Actions.get()
-    .then()
+  const { id } = req.params;
+  const payload = req.body;
+  
+  Actions.update(id, payload)
+    .then(() => {
+      res.status(201).json({message: "Action Updated!"})
+    })
     .catch(err => {
       console.log(err)
       res.status(500).json({ error: "error on our end, sorry" });
