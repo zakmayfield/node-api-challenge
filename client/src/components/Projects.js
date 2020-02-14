@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Actions from './Actions';
 
 const Projects = () => {
   const [api] = useState("http://localhost:5001/api/projects");
@@ -8,7 +9,6 @@ const Projects = () => {
   useEffect(() => {
     axios.get(api)
       .then(res => {
-        console.log(res.data)
         setProjects(res.data);
       })
       .catch(err => console.log(err));
@@ -22,6 +22,7 @@ const Projects = () => {
           return (
             <div key={i}>
               <p>{item.name}</p>
+              <Actions id={item.id} />
             </div>
           )
         })
