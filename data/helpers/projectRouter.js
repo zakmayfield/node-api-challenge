@@ -28,12 +28,12 @@ router.post('/', (req, res) => {
     })
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', validateProjectId, (req, res) => {
   const { id } = req.params;
 
   Projects.remove(id)
     .then(() => {
-      res.status(202).json({ message: "user successfully removed" });
+      res.status(202).json({ message: "project successfully removed" });
     })
     .catch(err => {
       console.log(err)
