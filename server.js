@@ -1,7 +1,6 @@
 // ------imports-----
 const express = require('express');
 const server = express();
-const morgan = require('morgan');
 const cors = require('cors');
 
 const projectRouter = require('./data/helpers/projectRouter');
